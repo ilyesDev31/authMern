@@ -2,22 +2,25 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { useGetMeQuery, useLogoutMutation } from "../slices/userApiSlice";
+import { useLogoutMutation } from "../slices/userApiSlice";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../slices/userSlice";
 const Header = () => {
-  const { data, isFetching, isLoading, error } = useGetMeQuery();
+  const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
   const logoutHandler = async (e) => {
     e.preventDefault();
     try {
+      dispatch(logoutUser());
       const res = await logout().unwrap();
-      location.pathname = "/";
+      navigate("/");
     } catch (error) {
-      toast.error(error.data.message);
+      console.log(error);
     }
   };
-  if (isLoading || isFetching) return <h1>Loading...</h1>;
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
@@ -28,9 +31,9 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {data?.user ? (
+            {user ? (
               <>
-                <NavDropdown title={data.user.name} id="username">
+                <NavDropdown title={user.name} id="username">
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

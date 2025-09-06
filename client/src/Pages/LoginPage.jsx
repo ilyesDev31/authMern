@@ -10,14 +10,15 @@ import { setCredentials } from "../slices/userSlice";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const { user } = useSelector((state) => state.profile);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-  const { data, isLoading, isFetching, error } = useGetMeQuery();
-  console.log(data);
   // if (user) return <Navigate to="/profile" />;
+  if (user) return <Navigate to="/profile" />;
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -29,9 +30,7 @@ const LoginPage = () => {
       toast.error(error.data.message);
     }
   };
-  if (isLoading || isFetching) return <h1>Loading ...</h1>;
-  if (data) return <Navigate to="/profile" />;
-  console.log(data);
+  if (user) return <Navigate to="/profile" />;
   return (
     <FormContainer>
       <h1>Login</h1>
