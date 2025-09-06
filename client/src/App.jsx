@@ -12,6 +12,10 @@ import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./Pages/ProfilePage";
+import { useEffect } from "react";
+import { useGetMeQuery } from "./slices/userApiSlice";
+import { setCredentials, logoutUser } from "./slices/userSlice";
+import { useDispatch } from "react-redux";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
@@ -25,6 +29,15 @@ const router = createBrowserRouter(
   )
 );
 const App = () => {
+  const { data, isLoading, error } = useGetMeQuery();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (data) {
+      dispatch(setCredentials(data.user));
+    } else if (error) {
+      dispatch(logoutUser());
+    }
+  }, [data, error, dispatch]);
   return (
     <>
       <RouterProvider router={router} />
