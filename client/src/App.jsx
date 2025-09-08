@@ -30,6 +30,7 @@ const router = createBrowserRouter(
 );
 const App = () => {
   const { data, isLoading, error } = useGetMeQuery();
+  console.log(data);
   const dispatch = useDispatch();
   useEffect(() => {
     if (data) {
@@ -37,7 +38,8 @@ const App = () => {
     } else if (error) {
       dispatch(logoutUser());
     }
-  }, [data, error, dispatch]);
+  }, [data, error, isLoading, dispatch]);
+  if (isLoading) return <h1>Loading</h1>;
   return (
     <>
       <RouterProvider router={router} />
