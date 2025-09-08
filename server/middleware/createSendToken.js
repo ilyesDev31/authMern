@@ -8,7 +8,7 @@ module.exports = (user, statusCode, res) => {
     path: "/",
     domain:
       process.env.NODE_ENV === "production"
-        ? "https://https://authern.netlify.app"
+        ? "https://https://authmern-9umn.onrender.com/"
         : "",
   };
 
