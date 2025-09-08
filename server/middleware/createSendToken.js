@@ -5,6 +5,7 @@ module.exports = (user, statusCode, res) => {
     secure: process.env.NODE_ENV === "production",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: "None",
+    path: "/",
   };
 
   res.cookie("jwt", token, options).status(statusCode).json({
