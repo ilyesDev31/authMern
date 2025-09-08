@@ -16,7 +16,7 @@ app.use(hpp());
 app.use(helmet());
 app.use(
   cors({
-    origin: ["https://authern.netlify.app", "http://localhost:5173"],
+    origin: "https://authern.netlify.app",
     credentials: true,
   })
 );
