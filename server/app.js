@@ -17,7 +17,9 @@ app.use(helmet());
 app.use(
   cors({
     origin: "https://authern.netlify.app",
-    credentials: true,
+    credentials: true, // This allows cookies to be sent
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
 const limiting = limit({
