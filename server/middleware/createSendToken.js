@@ -6,6 +6,10 @@ module.exports = (user, statusCode, res) => {
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     path: "/",
+    domain:
+      process.env.NODE_ENV === "production"
+        ? "https://https://authern.netlify.app"
+        : "",
   };
 
   res.cookie("jwt", token, options).status(statusCode).json({
