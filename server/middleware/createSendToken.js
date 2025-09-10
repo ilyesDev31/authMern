@@ -2,13 +2,10 @@ module.exports = (user, statusCode, res) => {
   const token = user.signToken(user._id);
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // true in production
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: true,
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    path: "/",
   };
-
-  res.cookie("jwt", token, options).status(statusCode).json({
+  res.cookie("jwt", token, options).statusCode(statusCode).json({
     status: "success",
     user,
   });
