@@ -16,7 +16,7 @@ app.use(hpp());
 app.use(helmet());
 app.use(
   cors({
-    origin: "https://authmern-1-3tbn.onrender.com/",
+    origin: "https://authmern-static.onrender.com/",
     credentials: true, // This allows cookies to be sent
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
