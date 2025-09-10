@@ -18,8 +18,6 @@ app.use(
   cors({
     origin: "https://authmern-static.onrender.com",
     credentials: true, // This allows cookies to be sent
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
 const limiting = limit({
