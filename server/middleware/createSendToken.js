@@ -4,6 +4,7 @@ module.exports = (user, statusCode, res) => {
     httpOnly: true,
     secure: true,
     maxAge: 30 * 24 * 60 * 60 * 1000,
+    sameSite: "none",
   };
   res.cookie("jwt", token, options).statusCode(statusCode).json({
     status: "success",
