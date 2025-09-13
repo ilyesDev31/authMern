@@ -16,7 +16,10 @@ app.use(hpp());
 app.use(helmet());
 app.use(
   cors({
-    origin: "https://authmern-static.onrender.com",
+    origin: [
+      "https://authmern-static.onrender.com",
+      "https://authern.netlify.app/",
+    ],
     credentials: true, // This allows cookies to be sent
   })
 );
@@ -25,14 +28,20 @@ const limiting = limit({
   windowMs: 10 * 60 * 1000,
   message: "please try again later",
 });
+// if (process.env.NODE_ENV === "production") {
+//   const __dirname = path.resolve().replace("server");
+//   app.use(express.static(path.join(__dirname, "client", "dist")));
+//   app.get("/", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+//   });
+// }
+app.use("/api/v1/auth", authRoutes);
+// serve static assets if in prod
 if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve().replace("server");
-  app.use(express.static(path.join(__dirname, "client", "dist")));
-  app.get("/", (req, res) => {
+  app.use(express.static("client/dist"));
+  app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
   });
 }
-app.use("/api/v1/auth", authRoutes);
-
 app.use(errorHandler);
 module.exports = app;
