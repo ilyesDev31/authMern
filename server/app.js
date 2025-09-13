@@ -25,20 +25,20 @@ const limiting = limit({
   windowMs: 10 * 60 * 1000,
   message: "please try again later",
 });
-// if (process.env.NODE_ENV === "production") {
-//   const __dirname = path.resolve().replace("server");
-//   app.use(express.static(path.join(__dirname, "client", "dist")));
-//   app.get("/", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-//   });
-// }
-app.use("/api/v1/auth", authRoutes);
-// serve static assets if in prod
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/dist"));
-  app.get("*", (req, res) => {
+  const __dirname = path.resolve().replace("server");
+  app.use(express.static(path.join(__dirname, "client", "dist")));
+  app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
   });
 }
+app.use("/api/v1/auth", authRoutes);
+// serve static assets if in prod
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("client/dist"));
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+//   });
+// }
 app.use(errorHandler);
 module.exports = app;
